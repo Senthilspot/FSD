@@ -15,4 +15,7 @@ module.exports = (app) => {
 
     // delete A route by a category id
     app.delete("/ecomm/api/v1/category/:id",categoryController.delete);
+
+    //Find all Products by the Category id
+    app.get("/ecomm/api/v1/Allcategory/:id",categoryController.getycategoryid);
 }

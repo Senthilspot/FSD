@@ -1,6 +1,7 @@
 const db = require("../models")
 const { where } = require("sequelize")
 const Category = db.Category;
+const Product = db.Product;
 
 exports.create = (req, res) => {
 
@@ -83,4 +84,17 @@ exports.delete = (req, res) => {
         .then((data) => {
             res.send({ message: "Deleted Sucessfully" })
         })
+}
+
+exports.getycategoryid = (req, res) => {
+    const categoryId = req.params.id;
+
+    Product.findAll({
+        where: {
+            categoryid: categoryId
+        }
+    })
+    .then((product) => {
+        res.send(product);
+    })
 }
