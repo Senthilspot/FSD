@@ -5,23 +5,18 @@ const Product = db.Product;
 
 exports.create = (req, res) => {
 
-    const { name, description } = req.body;
-
-    if (!name) {
-        res.status(400).send({ message: "Name of Category cannot be empty" });
-    }
     const category = {
-        name: name,
-        description: description
+        name: req.body.name,
+        description: req.body.description
     }
     Category.create(category)
-    .then(category => {
-        console.log(`category with name ${category.name} created Sucessfully`);
-        res.status(201).send(category);
-    })
-    .catch((err) => {
-        res.status(500).send({ message: "Something Went Wrong" });
-    })
+        .then(category => {
+            console.log(`category with name ${category.name} created Sucessfully`);
+            res.status(201).send(category);
+        })
+        .catch((err) => {
+            res.status(500).send({ message: "Something Went Wrong" });
+        })
 
 }
 exports.getAll = (req, res) => {
@@ -39,9 +34,9 @@ exports.getOne = (req, res) => {
     const categoryId = req.params.id;
 
     Category.findByPk(categoryId)
-        .then((category) => { 
-            if(!category){
-            res.status(400).send({message:`Category with id: ${categoryId} doesn't exists`});
+        .then((category) => {
+            if (!category) {
+                res.status(400).send({ message: `Category with id: ${categoryId} doesn't exists` });
             }
 
             res.send(category);
@@ -66,7 +61,7 @@ exports.update = (req, res) => {
         where: { id: categoryId }
     })
         .then((updatedCategory) => {
-            res.send({message:`${updatedCategory} records Updated Sucessfully`})
+            res.send({ message: `${updatedCategory} records Updated Sucessfully` })
         })
         .catch((err) => {
             res.status(500).send({ message: "Something Went Worng" });
@@ -84,9 +79,12 @@ exports.delete = (req, res) => {
         .then((data) => {
             res.send({ message: "Deleted Sucessfully" })
         })
+        .catch((err) => {
+            res.status(500).send({ message: "Something Went Worng" });
+        })
 }
 
-exports.getycategoryid = (req, res) => {
+exports.getbycategoryid = (req, res) => {
     const categoryId = req.params.id;
 
     Product.findAll({
@@ -94,7 +92,10 @@ exports.getycategoryid = (req, res) => {
             categoryid: categoryId
         }
     })
-    .then((product) => {
-        res.send(product);
-    })
+        .then((product) => {
+            res.send(product);
+        })
+        .catch((err) => {
+            res.status(500).send({ message: "Something Went Worng" });
+        })
 }

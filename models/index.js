@@ -1,4 +1,4 @@
-const config=require("../configs/db.config");
+const config = require("../configs/db.config");
 const Sequelize = require("sequelize");
 
 
@@ -7,28 +7,30 @@ const sequelize = new Sequelize(
     config.USER,
     config.PASSWORD,
     {
-        host:config.HOST,
-        dialect:config.dialect,
-        operatorAliases:false,
-        pool:{
-            max:config.pool.max,
-            min:config.pool.min,
-            acquire:config.pool.acquire,
-            idle:config.pool.idle
+        host: config.HOST,
+        dialect: config.dialect,
+        operatorAliases: false,
+        pool: {
+            max: config.pool.max,
+            min: config.pool.min,
+            acquire: config.pool.acquire,
+            idle: config.pool.idle
         }
     }
 );
 
-const db={};
+const db = {};
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
-db.Category = require("./category.model")(Sequelize,sequelize);
-db.Product= require("./product.model")(Sequelize,sequelize);
+db.Category = require("./category.model")(Sequelize, sequelize);
+db.Product = require("./product.model")(Sequelize, sequelize);
 
-db.Category.hasMany(db.Product,{
-    foreignKey:"categoryId"
+db.Category.hasMany(db.Product, {
+    foreignKey: "categoryId"
 })
-// db.Product.belongsTo(db.Category);
+db.Product.belongsTo(db.Category, {
+    foreignKey: "id"
+});
 
-module.exports=db;
+module.exports = db;

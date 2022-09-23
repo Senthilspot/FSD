@@ -1,28 +1,28 @@
-module.exports = (Sequelize,sequalize)=>{
+module.exports = (Sequelize, sequalize) => {
 
-    const Product = sequalize.define("product",{
+    const Product = sequalize.define("product", {
 
-        id:{
-            type:Sequelize.INTEGER,
-            primaryKey:true,
-            autoIncrement:true
+        id: {
+            type: Sequelize.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
         },
-        name:{
-            type:Sequelize.STRING,
-            allowNull:false
+        name: {
+            type: Sequelize.STRING,
+            allowNull: false
         },
-        description:{
-            type:Sequelize.STRING
+        description: {
+            type: Sequelize.STRING
         },
-        cost:{
-            type:Sequelize.INTEGER,
-            allowNull:false
+        cost: {
+            type: Sequelize.INTEGER,
+            allowNull: false
         },
-        categoryId:{
-            type:Sequelize.INTEGER
+        categoryId: {
+            type: Sequelize.INTEGER
         }
-    },{
-        tableName:'products'
+    }, {
+        tableName: 'products'
     });
 
     return Product;
