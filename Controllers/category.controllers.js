@@ -1,7 +1,4 @@
-const db = require("../models")
-const { where } = require("sequelize")
-const Category = db.Category;
-const Product = db.Product;
+const { Product, Category } = require("../models");
 
 exports.create = (req, res) => {
 
@@ -25,7 +22,7 @@ exports.getAll = (req, res) => {
             res.send(categories);
         })
         .catch((err) => {
-            res.status(500).send({ message: "Something went Wrong" })
+            res.status(500).send({ message: "Something went Wrong" });
         })
 }
 
@@ -50,18 +47,12 @@ exports.update = (req, res) => {
     const categoryId = req.params.id;
 
     const { name, description } = req.body;
-    const category = {};
-    if (name) {
-        category.name = name;
-    }
-    if (description) {
-        category.description = description;
-    }
+    const category = { name, description };
     Category.update(category, {
         where: { id: categoryId }
     })
         .then((updatedCategory) => {
-            res.send({ message: `${updatedCategory} records Updated Sucessfully` })
+            res.send({ message: `${updatedCategory} records Updated Sucessfully` });
         })
         .catch((err) => {
             res.status(500).send({ message: "Something Went Worng" });
@@ -77,7 +68,7 @@ exports.delete = (req, res) => {
         }
     })
         .then((data) => {
-            res.send({ message: "Deleted Sucessfully" })
+            res.send({ message: "Deleted Sucessfully" });
         })
         .catch((err) => {
             res.status(500).send({ message: "Something Went Worng" });

@@ -33,7 +33,7 @@ const valideteProductRequest = (req, res, next) => {
 const validateCategoryPassed = (req, res, next) => {
     const categoryId = parseInt(req.params.categoryid)
     if (!categoryId) {
-        res.send(400).send({ message: "Category Id is not passed or invalid" })
+        res.send(400).send({ message: "Category Id is not passed or invalid" });
     }
     Category.findByPk(categoryId)
         .then(category => {
@@ -55,12 +55,12 @@ const validateCategoryAndProductPassed = (req, res, next) => {
     const productId = parseInt(req.params.productid);
 
     if (!categoryId) {
-        res.status(400).send({ message: "Category Id is not passed or it's invalid" })
+        res.status(400).send({ message: "Category Id is not passed or it's invalid" });
     }
 
 
     if (!productId) {
-        res.status(400).send({ message: "ProductId Id is not passed or  it's invalid" })
+        res.status(400).send({ message: "ProductId Id is not passed or  it's invalid" });
     }
 
 

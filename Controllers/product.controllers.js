@@ -23,7 +23,7 @@ exports.findAll = (req, res) => {
             res.send(product);
         })
         .catch((err) => {
-            res.status(500).send({ message: "Something went Wrong" })
+            res.status(500).send({ message: "Something went Wrong" });
         })
 }
 
@@ -62,7 +62,7 @@ exports.update = (req, res) => {
         where: { id: productId }
     })
         .then((updatedproduct) => {
-            res.send({ message: `${updatedproduct} records Updated Sucessfully` })
+            res.send({ message: `${updatedproduct} records Updated Sucessfully` });
         })
         .catch((err) => {
             res.status(500).send({ message: "Something Went Worng" });
@@ -78,7 +78,7 @@ exports.delete = (req, res) => {
         }
     })
         .then((data) => {
-            res.send({ message: "Deleted Sucessfully" })
+            res.send({ message: "Deleted Sucessfully" });
         })
         .catch((err) => {
             res.status(500).send({ message: "Something Went Worng" });
