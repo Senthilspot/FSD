@@ -22,6 +22,7 @@ exports.create = (req, res) => {
 // GET localhost:8080/ecomm/api/v1/products?maxCost=80000
 // GET localhost:8080/ecomm/api/v1/products?minCost=60000&maxCost=80000
 exports.findAll = (req, res) => {
+    console.log(req.user);
     const {name,minCost,maxCost} = req.query;
 
 
