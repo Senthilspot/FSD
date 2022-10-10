@@ -27,6 +27,7 @@ db.Category = require("./category.model")(Sequelize, sequelize);
 db.Product = require("./product.model")(Sequelize, sequelize);
 db.User = require("./user.model")(Sequelize, sequelize);
 db.Role = require("./role.model")(Sequelize, sequelize);
+db.Cart = require("./cart.model")(Sequelize,sequelize);
 
 // Linking Category with Product
 db.Category.hasMany(db.Product, {
@@ -38,12 +39,31 @@ db.Product.belongsTo(db.Category, {
 
 // Seting Role For Users
 db.Role.belongsToMany(db.User,{
-    through:"userRoles"
+    through:"userRoles",
+    foreignKey:"roleId",
+    otherKey:"userId"
 });
 
 db.User.belongsToMany(db.Role,{
-    through:"userRoles"
+    through:"userRoles",
+    foreignKey:"userId",
+    otherKey:"roleId"
 })
+
+db.User.hasOne(db.Cart);
+db.Cart.belongsTo(db.User);
+
+db.Product.belongsToMany(db.Cart,{
+    through:"cart_products",
+    foreignKey:"productId",
+    otherKey:"cartId"
+});
+
+db.Cart.belongsToMany(db.Product,{
+    through:"cart_products",
+    foreignKey:"cartId",
+    otherKey:"productId"
+});
 
 
 db.ROLES = ["user","admin"];

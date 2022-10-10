@@ -5,17 +5,21 @@ const Op= Sequelize.Op;
 
 exports.create = (req, res) => {
 
-    const { name, description, cost, categoryId } = req.body;
-    const product = { name, description, cost, categoryId };
+    if(!req.isAdmin){
+        return res.status(403).send({message:"OOPS! you are unauthorized to perform this task"});
+    }
+
+
+    const {name,description,cost,categoryId}=req.body;
+    const product = {name,description,cost,categoryId};
 
     Product.create(product)
-        .then(product => {
-            console.log(`Product with name ${product.name} created Sucessfully`);
-            res.status(201).send(product);
-        })
-        .catch((err) => {
-            res.status(500).send({ message: err.message || "Something Went Wrong" });
-        })
+    .then(product=>{
+        res.status(201).send(product);
+    })
+    .catch((err)=>{
+        res.status(500).send({message:err.message || "Something went wrong"});
+    })
 }
 
 // GET localhost:8080/ecomm/api/v1/products?minCost=80000
@@ -25,8 +29,6 @@ exports.findAll = (req, res) => {
     console.log(req.user);
     const {name,minCost,maxCost} = req.query;
 
-
-    console.log(req.query);
 
     if(name){
         productsPromise=Product.findAll({

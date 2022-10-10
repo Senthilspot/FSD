@@ -1,9 +1,9 @@
 const ProductControllers = require("../Controllers/product.controllers")
-const { requestValidator } = require("../Middleware")
+const { requestValidator, authJWT } = require("../Middleware")
 
 module.exports = (app) => {
     // Create a New Product
-    app.post("/ecomm/api/v1/products", requestValidator.valideteProductRequest, ProductControllers.create)
+    app.post("/ecomm/api/v1/products", [requestValidator.valideteProductRequest,authJWT.verifyToken], ProductControllers.create)
 
     //get all the routes
     app.get("/ecomm/api/v1/products", ProductControllers.findAll);

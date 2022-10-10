@@ -1,4 +1,4 @@
-const { User, Roles } = require("../models");
+const { User, ROLES } = require("../models");
 
 const Validemailandusername = (req, res, next) => {
     const { username, email } = req.body;
@@ -31,7 +31,7 @@ const checkRoleExist = (req, res, next) => {
     const roles = req.body.roles;
     if (roles) {
         for (let i = 0; i < roles.length; i++) {
-            if (!Roles.includes(roles[i])) {
+            if (!ROLES.includes(roles[i])) {
                 res.status(400).send({ message: "Roles dosen't Exist" + roles[i] })
                 return;
             }

@@ -36,8 +36,6 @@ db.sequelize.sync({ force: false })
 
 require("./Routes/auth.routes")(app);
 
-app.use(authJWT.verifyToken);
-
 //impoted category routes
 require("./Routes/category.routes")(app);
 // omport Product routes
@@ -46,6 +44,8 @@ require("./Routes/product.routes")(app);
 //import User routes 
 require("./Routes/user.routes")(app);
 
+//import Cart routes 
+require("./Routes/cart.routes")(app)
 
 
 app.listen(process.env.PORT, () => {

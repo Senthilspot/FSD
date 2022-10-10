@@ -1,29 +1,32 @@
 const { Product, Category } = require("../models");
 
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
 
-    const category = {
-        name: req.body.name,
-        description: req.body.description
+    try {
+        if (!req.isAdmin) {
+            return res.status(403).send({ message: "OOPS! you are unauthorized to perform this task" });
+        };
+        const category = { name: req.body.name, description: req.body.description };
+
+        await Category.create(category);
+
+        console.log(`category with name ${category.name} created successfully`);
+        res.status(201).send(category);
+
+    } catch (err) {
+        res.status(500).semd({ message: "Something went wrong" });
     }
-    Category.create(category)
-        .then(category => {
-            console.log(`category with name ${category.name} created Sucessfully`);
-            res.status(201).send(category);
-        })
-        .catch((err) => {
-            res.status(500).send({ message: "Something Went Wrong" });
-        })
+
 
 }
-exports.getAll = (req, res) => {
-    Category.findAll()
-        .then((categories) => {
-            res.send(categories);
-        })
-        .catch((err) => {
-            res.status(500).send({ message: "Something went Wrong" });
-        })
+exports.getAll = async (req, res) => {
+    try {
+        const categories = await Category.findAll()
+        res.send(categories);
+
+    } catch (err) {
+        res.status(500).send({ message: "Something went Wrong" });
+    }
 }
 
 
@@ -44,22 +47,40 @@ exports.getOne = (req, res) => {
 }
 
 exports.update = (req, res) => {
+    if (!req.roles.includes('admin')) {
+        return res.status(403).send({ message: "OOPS! you are unauthorized to perform this task" });
+    }
+
     const categoryId = req.params.id;
 
     const { name, description } = req.body;
-    const category = { name, description };
+
+    const category = {};
+
+    if (name) {
+        category.name = name;
+    }
+
+    if (description) {
+        category.description = description;
+    }
+
     Category.update(category, {
         where: { id: categoryId }
     })
         .then((updatedCategory) => {
-            res.send({ message: `${updatedCategory} records Updated Sucessfully` });
+            res.send({ message: `${updatedCategory[0]} records updated successfully}` });
         })
         .catch((err) => {
-            res.status(500).send({ message: "Something Went Worng" });
+            res.status(500).send({ message: "Something went wrong" });
         })
 }
 
 exports.delete = (req, res) => {
+    if (!req.isAdmin) {
+        return res.status(403).send({ message: "OOPS! you are unauthorized to perform this task" });
+    }
+
     const categoryId = req.params.id;
 
     Category.destroy({
@@ -68,10 +89,10 @@ exports.delete = (req, res) => {
         }
     })
         .then((data) => {
-            res.send({ message: "Deleted Sucessfully" });
+            res.send({ message: "Successfully deleted the category" });
         })
         .catch((err) => {
-            res.status(500).send({ message: "Something Went Worng" });
+            res.status(500).send({ message: "Something went wrong" });
         })
 }
 
