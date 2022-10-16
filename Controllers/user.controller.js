@@ -25,3 +25,33 @@ exports.delete = (req, res) => {
             res.status(500).send({ message: "Something Went Worng" });
         })
 }
+
+exports.update = (req, res) => {
+    if (!req.roles.includes('admin')) {
+        return res.status(403).send({ message: "OOPS! you are unauthorized to perform this task" });
+    }
+
+    const userId = req.params.id;
+
+    const { name, email } = req.body;
+
+    const user = {};
+
+    if (name) {
+        user.name = name;
+    }
+
+    if (email) {
+        user.email = email;
+    }
+
+    User.update(user, {
+        where: { id: userId }
+    })
+        .then((updateduser) => {
+            res.send({ message: `${updateduser[0]} records updated successfully}` });
+        })
+        .catch((err) => {
+            res.status(500).send({ message: "Something went wrong" });
+        })
+}
