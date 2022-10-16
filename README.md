@@ -68,7 +68,7 @@
 # User Routes
 
     //Find all User
-    get("/ecomm/api/v1/users", userController.findAll);
+    get "/ecomm/api/v1/users"
     
     //Delete User y id
-    delete("/ecomm/api/v1/users/:id"
+    delete "/ecomm/api/v1/users/:id"
