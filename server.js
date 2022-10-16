@@ -24,15 +24,15 @@ db.sequelize.sync({ force: false })
  * Add roles 
  */
 
-//  Role.create({
-//     id:1,
-//     name:"user"
-// });
+ Role.create({
+    id:1,
+    name:"user"
+});
 
-// Role.create({
-//     id:2,
-//     name:"admin"
-// })
+Role.create({
+    id:2,
+    name:"admin"
+})
 
 require("./Routes/auth.routes")(app);
 
