@@ -29,7 +29,7 @@ exports.signIn = async (req,res) =>{
     }
 
     try{
-    var user = await User.findOne({where:{userName:username}});  
+    var user = await User.findOne({where:{username:username}});  
     }   catch(e){
         return res.status(500).send({message:e.message});
     }
@@ -56,7 +56,7 @@ exports.signIn = async (req,res) =>{
       });
 
     res.send({id:user.id,
-            userName:user.userName,
+            username:user.username,
             email:user.email,
             roles:roles,
             accessToken:token
