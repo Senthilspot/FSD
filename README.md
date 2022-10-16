@@ -3,10 +3,10 @@
 # Auth Routes
 
     //Sign-Up
-    post("/ecomm/api/v1/auth/signup"
+    post "/ecomm/api/v1/auth/signup"
 
     //Signin
-    post("/ecomm/api/v1/auth/signin"
+    post "/ecomm/api/v1/auth/signin"
 
 # Category Routes
 
