@@ -2,10 +2,11 @@ const { Product, Category } = require("../models");
 
 exports.create = async (req, res) => {
 
+    if (!req.isAdmin) {
+        return res.status(403).send({ message: "OOPS! you are unauthorized to perform this task" });
+    };
     try {
-        if (!req.isAdmin) {
-            return res.status(403).send({ message: "OOPS! you are unauthorized to perform this task" });
-        };
+       
         const category = { name: req.body.name, description: req.body.description };
 
         await Category.create(category);
