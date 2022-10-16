@@ -68,14 +68,10 @@
 # User Routes
 
     //Find all User
-<<<<<<< HEAD
     get "/ecomm/api/v1/users"
     
-    //Delete User y id
+    //Delete User by id
     delete "/ecomm/api/v1/users/:id"
-=======
-    get "/ecomm/api/v1/users"'
     
-    //Delete User y id
+    //Update User by id
     delete"/ecomm/api/v1/users/:id"
->>>>>>> ac0695e (Deployed)
