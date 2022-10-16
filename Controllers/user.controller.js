@@ -1,4 +1,5 @@
-const { User } = require("../models");
+const { User, Role, Sequelize, ROLES } = require("../models");
+const bcrypt = require("bcrypt");
 
 exports.findAll = (req, res) => {
 
@@ -26,32 +27,36 @@ exports.delete = (req, res) => {
         })
 }
 
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
     if (!req.roles.includes('admin')) {
         return res.status(403).send({ message: "OOPS! you are unauthorized to perform this task" });
     }
+    try {
 
-    const userId = req.params.id;
+        const userId = req.params.id;
 
-    const { name, email } = req.body;
+        const { username, email, password } = req.body;
 
-    const user = {};
+        const user = {};
 
-    if (name) {
-        user.name = name;
+        if (username) {
+            user.username = username;
+        }
+
+        if (email) {
+            user.email = email;
+        }
+
+        if (password) {
+            user.password = bcrypt.hashSync(password, 8);
+        }
+
+        await User.update(user, { where: { id: userId } })
+
+        res.status(200).send({ message: ` user updated successfully}` });
+
+    } catch (err) {
+        res.status(500).send({ message: "Something went wrong" });
     }
 
-    if (email) {
-        user.email = email;
-    }
-
-    User.update(user, {
-        where: { id: userId }
-    })
-        .then((updateduser) => {
-            res.send({ message: `${updateduser[0]} records updated successfully}` });
-        })
-        .catch((err) => {
-            res.status(500).send({ message: "Something went wrong" });
-        })
 }

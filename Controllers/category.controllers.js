@@ -6,7 +6,7 @@ exports.create = async (req, res) => {
         return res.status(403).send({ message: "OOPS! you are unauthorized to perform this task" });
     };
     try {
-       
+
         const category = { name: req.body.name, description: req.body.description };
 
         await Category.create(category);
